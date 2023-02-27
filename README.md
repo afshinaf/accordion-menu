@@ -1,1 +1,1 @@
-# afshinaf-accordion-menu
+# accordion-menu
