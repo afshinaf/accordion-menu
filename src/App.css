@@ -1,5 +1,15 @@
 .App {
-    background-color: #181818;
-    width: 100vw;
-    height: 100vh;
+    width            : 100vw;
+    height           : 100vh;
+    direction        : rtl;
+    font-family      : "Segoe UI";
+    background-color : #181818;
+}
+
+.box {
+    width            : 20%;
+    height           : 100%;
+    padding          : 2rem 0;
+    background-color : #fff;
+
 }
