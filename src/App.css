@@ -13,3 +13,9 @@
     background-color : #fff;
 
 }
+
+.accordion-button::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+}
