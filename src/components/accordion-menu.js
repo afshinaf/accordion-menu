@@ -4,7 +4,8 @@ import Accordion from 'react-bootstrap/Accordion';
 
 const AccordionMenu = () => {
 
-    const apiUrl                      = 'https://mohsenfathipour.com/api/categories.json';
+    const baseUrl                     = 'https://mohsenfathipour.com';
+    const apiUrl                      = `${baseUrl}/api/categories.json`;
     const [categories, setCategories] = useState([]);
 
     useEffect( () => {
@@ -12,7 +13,8 @@ const AccordionMenu = () => {
     },[])
 
     const getItems = async () => {
-        const items = await axios.get(apiUrl)
+        const items = await axios
+            .get(apiUrl)
             .then((response) => {
                 setCategories(response.data)
             })
@@ -20,35 +22,32 @@ const AccordionMenu = () => {
         return items;
     }
 
-    return (
-        categories.map((category, index) => {
-            return(
-                <Accordion defaultActiveKey={`${index}`}>
-                    <Accordion.Item eventKey={`${index}`}>
-                        <Accordion.Header>{category.name}</Accordion.Header>
-                        <Accordion.Body>
-                            {
-                                !!category.children ? category.children.map((child, index) => (
-                                    !!child.children ? (
-                                        <Accordion defaultActiveKey={`${index + 1}`}>
-                                            <Accordion.Item eventKey={`${index + 1}`}>
-                                                <Accordion.Header>{child.name}</Accordion.Header>
-                                                <Accordion.Body>
-
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                        </Accordion>
-                                    ) : (
-                                        <a>{child.name}</a>
-                                    )
-                                )) : <div style={{backgroundColor: "red"}}> NO child </div>
-                            }
-                        </Accordion.Body>
-                    </Accordion.Item>
-                </Accordion>
+    const builtAccordion = (item) => {
+        if (item.children.length === 0)
+            return (
+                <Accordion.Item className="border border-0">
+                    <ul className="list-group border border-0 px-0">
+                        <li className="list-group-item list-group-item-action border border-0 bg-dark.bg-gradient my-1">
+                            <a href={`${baseUrl}${item.link}`} className="text-decoration-none">{item.name}</a>
+                        </li>
+                    </ul>
+                </Accordion.Item>
             )
-        })
-    );
+        return (
+            <Accordion>
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header>{item.name}</Accordion.Header>
+                    <Accordion.Body>{item.children.map((i) => builtAccordion(i))}</Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+        )
+    }
+
+    return categories.map((category, index) => {
+        return (
+            <Accordion>{builtAccordion(category)} </Accordion>
+        )
+    })
 }
 
 export default AccordionMenu
