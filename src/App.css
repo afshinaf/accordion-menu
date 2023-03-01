@@ -1,8 +1,13 @@
+* {
+    border: none;
+    box-sizing: border-box;
+}
+
 .App {
     width            : 100vw;
     height           : 100vh;
     direction        : rtl;
-    font-family      : "Segoe UI";
+    font-family: "Segoe UI", sans-serif;
     background-color : #181818;
 }
 

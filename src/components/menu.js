@@ -6,7 +6,7 @@ const Menu = () => {
         <>
             <div className="box d-flex flex-column">
                 <Header />
-                <AccordionMenu />
+                <AccordionMenu collapse={true}/>
             </div>
         </>
     )
